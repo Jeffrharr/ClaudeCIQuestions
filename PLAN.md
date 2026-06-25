@@ -159,7 +159,7 @@ check, the docs link, and any optional comment.
 3. ~~**Skill install scope**~~ — **resolved: per-repo by default, `--global-skill` for `~/.claude/skills`.**
 4. ~~**"Done" detection**~~ — **resolved: Claude judges completeness, then explicit y/n confirm**
    before flipping the status. No hard rubric yet (candidate for M4).
-5. **License** — _open._
+5. ~~**License**~~ — **resolved: MIT** (see `LICENSE`).
 
 ---
 
@@ -171,4 +171,6 @@ check, the docs link, and any optional comment.
 - **M2 — The Interview:** `skills/understanding-check/SKILL.md` (interview + clear). ✅
 - **M3 — Install Flow:** `scripts/install-into.sh` (vendors writer + workflow + skill) + README docs. ✅
 - **M4 — Polish (optional):** transcript summaries, PR-author verification, configurable depth,
-  richer status `target_url`, dogfood the gate on this repo. ⬜
+  richer status `target_url`. ⬜
+  - Dogfood the gate on this repo (admin bypass kept on). ✅
+  - MIT license. ✅

@@ -79,3 +79,11 @@ templates/understanding-gate.yml       # the workflow copied into a consumer's .
 skills/understanding-check/SKILL.md     # the /understanding-check interview
 PLAN.md                                # design, components, milestones
 ```
+
+This repo **dogfoods its own gate**: `.github/workflows/understanding-gate.yml` arms the
+check on its PRs, with `.understanding/set-status.sh` and `.claude/skills/.../SKILL.md`
+symlinked to the canonical sources above (so there's no drift).
+
+## License
+
+[MIT](./LICENSE) © 2026 Jeffrey Harrison
