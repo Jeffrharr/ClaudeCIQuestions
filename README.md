@@ -53,7 +53,13 @@ Then, in the target repo:
 
 1. Commit the vendored files.
 2. **Branch protection → Require status checks to pass →** add a required check named exactly
-   `understanding-check`. This is what actually blocks merges.
+   `understanding-check`. This is what actually blocks merges. (The workflow still arms the
+   check and the `/understanding-check` flow still works without this step — but nothing is
+   *enforced* until the check is required.)
+
+> **Note:** Required status checks need branch protection, which on GitHub's free tier is
+> only available for **public** repos (private repos need Pro/Team). Without it, the gate is
+> advisory — the check shows on PRs but doesn't block merge.
 
 ## Usage
 

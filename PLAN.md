@@ -172,5 +172,7 @@ check, the docs link, and any optional comment.
 - **M3 — Install Flow:** `scripts/install-into.sh` (vendors writer + workflow + skill) + README docs. ✅
 - **M4 — Polish (optional):** transcript summaries, PR-author verification, configurable depth,
   richer status `target_url`. ⬜
-  - Dogfood the gate on this repo (admin bypass kept on). ✅
+  - Dogfood the gate on this repo: enforcement live on `main` — required `understanding-check`
+    status, `enforce_admins: false` (admin bypass kept on), no required-PR rule. Repo made
+    public because free-tier branch protection requires it; the interview stays local either way. ✅
   - MIT license. ✅
