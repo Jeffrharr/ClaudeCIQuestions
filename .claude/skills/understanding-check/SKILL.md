@@ -1,1 +1,0 @@
-../../../skills/understanding-check/SKILL.md
