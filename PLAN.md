@@ -33,7 +33,7 @@ goes to GitHub is a one-line status flip.
 develop in Claude Code
         │
         ▼
-/understanding-check  ──►  Claude interviews you (local, private)
+/check-my-vibe  ──►  Claude interviews you (local, private)
         │                          │
         │                  "understanding confirmed"
         │                          ▼
@@ -64,7 +64,7 @@ develop in Claude Code
 - Thin wrapper over `gh api repos/{owner}/{repo}/statuses/{sha}` with
   `context=understanding-check`.
 - The **pending** status carries an explicit, instructional `description`
-  (e.g. `Run /understanding-check in Claude Code to unblock this PR`) and a
+  (e.g. `Run /check-my-vibe in Claude Code to unblock this PR`) and a
   `target_url` linking to the unblock docs — so the unblock path is visible right on the
   check, not buried. See "Making the unblock path obvious" below.
 - **Single source of truth** used by both the CI Action and the local clear path, so the
@@ -81,7 +81,7 @@ develop in Claude Code
 - Consumer adds `understanding-check` to **branch protection → required status checks**.
 
 ### C. The interview (Claude Code side)
-- A **Claude Code skill** exposing `/understanding-check [PR#]`.
+- A **Claude Code skill** exposing `/check-my-vibe [PR#]`.
 - Flow: resolve PR (current branch or arg) → fetch `gh pr diff` + metadata → conduct an
   interactive interview (what changed, why, blast radius / affected modules, edge cases,
   tests, rollback) → keep probing until satisfied → ask for explicit confirmation →
@@ -99,19 +99,19 @@ develop in Claude Code
 ## Making the unblock path obvious
 
 A required check that blocks merge without telling you how to clear it is just a confusing
-red X. The instruction "run `/understanding-check`" must be discoverable **from GitHub
+red X. The instruction "run `/check-my-vibe`" must be discoverable **from GitHub
 itself**, where the engineer hits the wall — without leaking any of the private Q&A.
 
 - **Status `description` (primary):** the pending status spells out the action verbatim,
-  e.g. `Run /understanding-check in Claude Code to unblock this PR`. This text shows inline
+  e.g. `Run /check-my-vibe in Claude Code to unblock this PR`. This text shows inline
   next to the check on the PR's merge box and checks tab.
 - **Status `target_url` (the "Details" link):** points to an unblock guide (a section of
   this repo's README, or a short docs page) covering: install the skill, run
-  `/understanding-check`, what to expect. One click from the failing check to the how-to.
+  `/check-my-vibe`, what to expect. One click from the failing check to the how-to.
 - **Consumer README/CONTRIBUTING note:** the `install-into.sh` flow adds a short blurb to
-  the target repo documenting the gate and the `/understanding-check` unblock step.
+  the target repo documenting the gate and the `/check-my-vibe` unblock step.
 - **Optional generic PR comment:** a single, *non-personal* first-touch comment on PR open
-  ("This repo requires an understanding check — run `/understanding-check` locally before
+  ("This repo requires an understanding check — run `/check-my-vibe` locally before
   merging"). Instructions only, never the engineer's answers. Off by default to keep PRs
   quiet; opt-in for teams that want maximum discoverability. The status description +
   target_url are the default, noise-free path.
@@ -134,8 +134,8 @@ check, the docs link, and any optional comment.
 │   └── install-into.sh             # vendor writer + workflow + skill into a target repo
 ├── templates/
 │   └── understanding-gate.yml      # workflow copied into a consumer's .github/workflows/
-└── skills/understanding-check/
-    └── SKILL.md                    # the /understanding-check interview logic
+└── skills/check-my-vibe/
+    └── SKILL.md                    # the /check-my-vibe interview logic
 ```
 
 ---
@@ -151,8 +151,7 @@ check, the docs link, and any optional comment.
 
 ## Open decisions
 
-1. **Project name** — keep repo `ClaudeCIQuestions`, or rename to something like
-   `pr-understanding-gate`? (Check context string `understanding-check` stays fixed regardless.) — _open_
+1. ~~**Project name**~~ — **resolved: `CheckMyVibe`.** Context string `understanding-check` stays fixed.
 2. ~~**Gate packaging**~~ — **resolved: vendoring.** `install-into.sh` copies a self-contained
    workflow + `set-status.sh` into each consumer (no cross-repo access friction, works for
    private repos). A `workflow_call` distribution is a possible future addition.
@@ -168,7 +167,7 @@ check, the docs link, and any optional comment.
 - **M0 — Plan & Repo:** git init + this plan. ✅
 - **M1 — Status Writer & Gate:** `scripts/set-status.sh` + `templates/understanding-gate.yml`
   (pending-on-push) + branch-protection docs. ✅
-- **M2 — The Interview:** `skills/understanding-check/SKILL.md` (interview + clear). ✅
+- **M2 — The Interview:** `skills/check-my-vibe/SKILL.md` (interview + clear). ✅
 - **M3 — Install Flow:** `scripts/install-into.sh` (vendors writer + workflow + skill) + README docs. ✅
 - **M4 — Polish (optional):** transcript summaries, PR-author verification, configurable depth,
   richer status `target_url`. ⬜

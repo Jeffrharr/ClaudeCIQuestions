@@ -1,8 +1,8 @@
 # Understanding Gate — arms the `understanding-check` status as `pending` on every PR push.
-# Clear it by running `/understanding-check` in Claude Code; that flips the status to success.
+# Clear it by running `/check-my-vibe` in Claude Code; that flips the status to success.
 #
 # Vendored into this repo by the Understanding Gate toolkit:
-#   Jeffrharr/ClaudeCIQuestions :: scripts/install-into.sh
+#   Jeffrharr/CheckMyVibe :: scripts/install-into.sh
 # The companion writer lives at .understanding/set-status.sh (single source of truth).
 name: Understanding Gate
 
