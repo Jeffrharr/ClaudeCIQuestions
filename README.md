@@ -21,7 +21,7 @@ the local interview is what unblocks the PR.
 develop in Claude Code
         │
         ▼
-/understanding-check  ──►  Claude interviews you (local, private)
+/check-my-vibe  ──►  Claude interviews you (local, private)
         │                          │
         │                  "understanding confirmed"
         │                          ▼
@@ -47,14 +47,14 @@ This vendors three things into the target repo (no runtime dependency on this to
 
 - `.understanding/set-status.sh` — the shared status writer
 - `.github/workflows/understanding-gate.yml` — arms `understanding-check` pending per PR push
-- the `/understanding-check` skill — the local interview
+- the `/check-my-vibe` skill — the local interview
 
 Then, in the target repo:
 
 1. Commit the vendored files.
 2. **Branch protection → Require status checks to pass →** add a required check named exactly
    `understanding-check`. This is what actually blocks merges. (The workflow still arms the
-   check and the `/understanding-check` flow still works without this step — but nothing is
+   check and the `/check-my-vibe` flow still works without this step — but nothing is
    *enforced* until the check is required.)
 
 > **Note:** Required status checks need branch protection, which on GitHub's free tier is
@@ -64,7 +64,7 @@ Then, in the target repo:
 ## Usage
 
 1. Open a PR. The gate posts `understanding-check = pending` and the merge button is blocked.
-2. When you're ready to merge, run `/understanding-check` in Claude Code. It pulls the diff
+2. When you're ready to merge, run `/check-my-vibe` in Claude Code. It pulls the diff
    and interviews you about the change.
 3. Once you've shown you understand it and confirm, the skill flips the check to `success`
    and the PR can merge.
@@ -73,7 +73,7 @@ Then, in the target repo:
 
 The toolkit ships two Claude Code skills:
 
-- **`understanding-check`** — the interactive pre-merge interview that probes your
+- **`check-my-vibe`** — the interactive pre-merge interview that probes your
   understanding of a PR and, on confirmation, clears the gate. This is the one wired into
   the gate by default.
 - **`junior-review`** — a sharp but domain-blind junior reviewer that emits 3–5
@@ -88,7 +88,7 @@ overridable by environment variables. Precedence: **built-in default < `.underst
 
 | Setting | Default | Controls |
 |---|---|---|
-| `UNDERSTANDING_SKILL` | `understanding-check` | The slash command shown in the check's unblock message. Point it at your own interview skill if you've made one. |
+| `UNDERSTANDING_SKILL` | `check-my-vibe` | The slash command shown in the check's unblock message. Point it at your own interview skill if you've made one. |
 | `UNDERSTANDING_CONTEXT` | `understanding-check` | The GitHub status check name. Must match your branch-protection required check — change both together. |
 | `UNDERSTANDING_DOCS_URL` | this README's "Unblocking a PR" | The status "Details" link. |
 
@@ -101,7 +101,7 @@ UNDERSTANDING_DOCS_URL=https://github.com/acme/dev-docs#understanding-gate
 
 ## Unblocking a PR
 
-If a PR is blocked by the `understanding-check` status, run **`/understanding-check`** in
+If a PR is blocked by the `understanding-check` status, run **`/check-my-vibe`** in
 Claude Code from the repo's working tree. It conducts the interview and, on your explicit
 confirmation, clears the check on the PR's current head commit. (This section is what the
 status's "Details" link points to.)
@@ -112,7 +112,7 @@ status's "Details" link points to.)
 scripts/set-status.sh                  # shared gh status writer (vendored into consumers)
 scripts/install-into.sh                # vendor the gate into a target repo
 templates/understanding-gate.yml       # the workflow copied into a consumer's .github/workflows
-skills/understanding-check/SKILL.md     # the /understanding-check interview (clears the gate)
+skills/check-my-vibe/SKILL.md           # the /check-my-vibe interview (clears the gate)
 skills/junior-review/SKILL.md           # the /junior-review assumption-exposing questions
 PLAN.md                                # design, components, milestones
 ```

@@ -5,7 +5,7 @@
 # dependency on this toolkit (avoids private cross-repo access headaches):
 #   • .understanding/set-status.sh             — the shared status writer
 #   • .github/workflows/understanding-gate.yml — arms `understanding-check` pending per PR push
-#   • the /understanding-check skill           — the local interview
+#   • the /check-my-vibe skill                 — the local interview
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"  # toolkit root
@@ -45,12 +45,12 @@ if [[ ! -f "$TARGET/.understanding/config" ]]; then
 fi
 
 if [[ "$GLOBAL_SKILL" -eq 1 ]]; then
-  SKILL_DEST="$HOME/.claude/skills/understanding-check"
+  SKILL_DEST="$HOME/.claude/skills/check-my-vibe"
 else
-  SKILL_DEST="$TARGET/.claude/skills/understanding-check"
+  SKILL_DEST="$TARGET/.claude/skills/check-my-vibe"
 fi
 mkdir -p "$SKILL_DEST"
-install -m 0644 "$HERE/skills/understanding-check/SKILL.md" "$SKILL_DEST/SKILL.md"
+install -m 0644 "$HERE/skills/check-my-vibe/SKILL.md" "$SKILL_DEST/SKILL.md"
 
 cat <<EOF
 
@@ -65,6 +65,6 @@ Next steps (manual):
   2. Enable branch protection on the default branch and add a REQUIRED status check
      named exactly:  understanding-check
        Settings → Branches → Branch protection → Require status checks to pass
-  3. Open a PR — the gate arms as 'pending'. Run /understanding-check in Claude Code
+  3. Open a PR — the gate arms as 'pending'. Run /check-my-vibe in Claude Code
      to complete the interview and unblock the merge.
 EOF
