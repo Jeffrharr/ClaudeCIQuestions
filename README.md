@@ -1,14 +1,16 @@
-# PR Understanding Gate
+# About
+check-my-vibe assists coders with understanding code changes that have been made by LLMs (currently Claude Code)
+by initiating a dialogue between the LLM and the coder to facilitate mutual understanding of major code changes.
 
-A reusable toolkit that makes an engineer demonstrate understanding of a pull request
-**before it can merge** — through a private, local Claude Code interview that clears a
-required GitHub status check.
+It's accompanied by a **github action** that can block PR merges until they have run `check-my-vibe`
+
+This is a private dialogue between the software engineer and the LLM. We admit to ourselves that the process of
+learning and understanding the inner workings of a PR can be messy and imperfect.
 
 - **Private** — the Q&A happens locally in Claude Code. Nothing is posted to the PR or
   visible in CI logs; only a one-line status flip touches GitHub.
-- **Enforced** — a GitHub Action arms an `understanding-check` status as *pending* on every
+- **Optionally Enforced** — a GitHub Action arms an `understanding-check` status as *pending* on every
   push; the PR cannot merge until your local interview flips it to *success*.
-- **Reusable** — install into any repo with a single curl command, no clone needed.
 
 See [PLAN.md](./PLAN.md) for the full design and rationale.
 
@@ -17,28 +19,22 @@ See [PLAN.md](./PLAN.md) for the full design and rationale.
 A GitHub Action can't push an interactive chat onto your laptop, so the arrow is inverted:
 the local interview is what unblocks the PR.
 
-```
-develop in Claude Code
-        │
-        ▼
-/check-my-vibe  ──►  Claude interviews you (local, private)
-        │                          │
-        │                  "understanding confirmed"
-        │                          ▼
-        │            .understanding/set-status.sh success  (gh api statuses/<sha>)
-        ▼                          │
- Action arms pending  ─►  required status check ─►  merge unblocked
- on each push (CI)                 ▲
-                                   │
-                  pushing new commits re-arms pending
-```
+1. Develop in claude code.
+2. Push PR and review it sufficiently.
+3. Run `/check-my-vibe` to further your understanding
+4. Claude runs .understanding/set-status.sh success for your PR (there is a bit of an honor system)
+5. PR is unblocked and you can merge.
+
+----
 
 Because the status is written per commit SHA, pushing new commits resets the gate to
 `pending` — so the check always reflects the *current* code.
 
 ## Install into a repo
 
-### Quick install (no clone needed)
+### Quick install
+
+The skill `/check-my-vibe` is installed locally in the repo along with its associated `.understanding/set-status.sh` script.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/Jeffrharr/CheckMyVibe/main/scripts/global-install.sh | bash -s -- /path/to/target-repo
@@ -63,7 +59,6 @@ If you have a local clone of this repo:
 
 ```sh
 scripts/install-into.sh /path/to/target-repo            # skill lives in the target repo
-scripts/install-into.sh /path/to/target-repo --global-skill   # skill in ~/.claude/skills
 ```
 
 ### After either install
@@ -137,10 +132,6 @@ skills/check-my-vibe/SKILL.md          # the /check-my-vibe interview (clears th
 skills/junior-review/SKILL.md          # the /junior-review assumption-exposing questions
 PLAN.md                                # design, components, milestones
 ```
-
-This repo **dogfoods its own gate**: `.github/workflows/understanding-gate.yml` arms the
-check on its PRs, with `.understanding/set-status.sh` and `.claude/skills/.../SKILL.md`
-symlinked to the canonical sources above (so there's no drift).
 
 ## License
 
