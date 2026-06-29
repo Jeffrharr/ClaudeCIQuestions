@@ -90,7 +90,7 @@ Then, in the target repo:
 
 ## Skills
 
-The toolkit ships three Claude Code skills:
+The toolkit ships two Claude Code skills:
 
 - **`check-my-vibe`** — the orchestrator wired into the gate. It resolves the PR, hands off
   to an interview skill, and on your explicit confirmation clears the gate. This is the one
@@ -100,10 +100,6 @@ The toolkit ships three Claude Code skills:
   understand it — it never touches the gate. **Replaceable:** point `CHECKMYVIBE_INTERVIEWER`
   at your own skill to customize how engineers are questioned, without changing the gate
   logic.
-- **`junior-review`** — a sharp but domain-blind junior reviewer that emits 3–5
-  diff-specific questions exposing unstated assumptions. Output only; it doesn't conduct an
-  interview or touch the gate. Useful as a quick self-review, or as a question source to
-  feed the interview.
 
 ## Configuration
 
@@ -141,7 +137,6 @@ scripts/global-install.sh              # curl-installable install, no clone need
 templates/checkmyvibe-gate.yml       # the workflow copied into a consumer's .github/workflows
 skills/check-my-vibe/SKILL.md          # the /check-my-vibe orchestrator (clears the gate)
 skills/pr-interview/SKILL.md           # the interview engine check-my-vibe calls (replaceable)
-skills/junior-review/SKILL.md          # the /junior-review assumption-exposing questions
 PLAN.md                                # design, components, milestones
 ```
 
